@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import ListProduk from "./ListProduk";   
 import firebase from "firebase";
 import firebaseConfig from "./config";
+import Product from "./Product";   
 
 class admin extends Component{
     constructor(props){
@@ -104,14 +105,14 @@ class admin extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label htmlFor="title" className="col-sm-2 col-form-label">Judul</label>
+                        <label htmlFor="title" className="col-sm-2 col-form-label">Nama Produk</label>
                         <div className="col-sm-10">
                             <input type="text" className="form-control" id="title" name="title" ref="judulProduk" 
                             onChange={this.handleTambahProduk}/>
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label htmlFor="body" className="col-sm-2 col-form-label">Isi</label>
+                        <label htmlFor="body" className="col-sm-2 col-form-label">Deskripsi Produk</label>
                         <div className="col-sm-10">
                             <textarea className="form-control" id="body" name="body" rows="3" ref="isiProduk" 
                             onChange={this.handleTambahProduk}></textarea>
@@ -123,12 +124,24 @@ class admin extends Component{
 
 
                 <h2>Daftar Produk</h2>
+                <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Deskripsi Produk</th>
+                        <th>Gambar Produk</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                </table>
                 {
                     this.state.listProduk.map(produk => {  // looping dan masukkan untuk setiap data yang ada di listArtikel ke variabel artikel
                         return <ListProduk key={produk.uid} image={produk.image} price={produk.price} judul={produk.title} isi={produk.body} 
                         idProduk={produk.uid} hapusProduk={this.handleHapusProduk}/>     // mappingkan data json dari API sesuai dengan kategorinya
                     })
                 }
+
             </div>
         )
     }
