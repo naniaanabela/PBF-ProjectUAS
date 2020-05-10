@@ -1,79 +1,60 @@
-// Step 5
-
-import React, { Component } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Component } from 'react';
+import firebase from "firebase";
+import firebaseConfig from "./config";
 import { Link } from 'react-router-dom';
- 
+
 class Product extends Component {
-  render() {
-    return (
-      <div>
-        <h2>Product</h2>
-        <p></p>
-        <p> Hidup ini seperti "kopi" yang diciptakan dengan komposisi sedikit pahit dan sedikit manis.
-          Menciptakan berjuta inspirasi, bisa juga sebagai penenang hati di kala kenangan lama mulai menghampiri.
-          Tersedia menu spesial untuk para penikmat kopi.
-          Bukan hanya sekedar kopi, kopi disini dibuat dengan sepenuh hati.
-          </p>
-   
-<div class="card-deck">
-  <div class="card">
-  <img class="card-img-top" src="https://cf.shopee.co.id/file/394fcf0269b4b82367f8058de2c5856c"
-      alt="Card image cap"/>
-    <a>
-      <div class="mask rgba-white-slight"></div>
-    </a>
-  <div class="card-body card-body-cascade">
-    <h5 class="pink-text pb-2 pt-1"><i class="fas fa-utensils"></i> Price Rp 20.000</h5>
-    <h4 class="font-weight-bold card-title">Kopi Lemon</h4>
-    <p class="card-text">Salah satu kopi khas di cafe ini. Kopi murni yang tersaring berkali-kali.
-    tanpa gula, sehingga aman bagi penyandang diabetes dengan sedikit aroma lemon.</p>
-    <Link to="/Contact" class="black-text d-flex justify-content-left">
-    <a class="btn btn-unique">Buy it</a>
-   </Link>
-  </div>
-  </div>
 
-  <div class="card">
-  <img class="card-img-top" src="https://id-test-11.slatic.net/original/68ae5dbfe3526ecdffc416065fb751c7.jpg"
-      alt="Card image cap"/>
-    <a>
-      <div class="mask rgba-white-slight"></div>
-    </a>
-  <div class="card-body card-body-cascade">
-    <h5 class="pink-text pb-2 pt-1"><i class="fas fa-utensils"></i> Price Rp 30.000</h5>
-    <h4 class="font-weight-bold card-title">Coffe V60</h4>
-    <p class="card-text">Jangan mengaku pecinta kopi jika belum mencoba menu yang satu ini.
-    Pahit Kopi V60 mampu menggugah semangat bahkan di tegukan pertama.</p>
-    <Link to="/Contact" class="black-text d-flex justify-content-left">
-    <a class="btn btn-unique">Buy it</a>
-    </Link>
-  </div>
-  </div>
+  constructor(props){
+    super(props);
+    firebase.initializeApp(firebaseConfig);
 
-  <div class="card">
-  <img class="card-img-top" src="https://cf.shopee.co.id/file/0be37a3d2d177ba5b03629ddfb712398"
-      alt="Card image cap"/>
-    <a>
-      <div class="mask rgba-white-slight"></div>
-    </a>
-  <div class="card-body card-body-cascade">
-    <h5 class="pink-text pb-2 pt-1"><i class="fas fa-utensils"></i> Price Rp 45.000</h5>
-    <h4 class="font-weight-bold card-title">Coffe Latte</h4>
-    <p class="card-text">Caffe Latte adalah kopi kesukaan sejuta umat. Anda tidak hanya menikmati kopinya
-    tetapi lukisan karya barista dijamin membuat Anda baper.</p>
-    <Link to="/Contact" class="black-text d-flex justify-content-left">
-    <a class="btn btn-unique">Buy it</a>
-    </Link>
-  </div>
-  </div>
+    this.state = {
+        listProduk: []
+    }
+    }
 
-</div>
-
-</div>
-
-    );
+    ambilDataDariServerAPI = () => {                // fungsi untuk mengambil data dari API dengan penambahan sort dan order
+      let ref = firebase.database().ref("/");
+      ref.on("value", snapshot => {
+          const state = snapshot.val();
+          this.setState(state);   
+      })
   }
+
+    componentDidMount() {       // komponen untuk mengecek ketika compnent telah di-mount-ing, maka panggil API
+      this.ambilDataDariServerAPI()  // ambil data dari server API lokal
+  }
+
+    render() {
+        let productList = this.state.listProduk.map(listProduk => {
+            return (
+                <div class="card" style={{ width: '23.2rem' }}>
+                    <img src={listProduk.image} class="card-img-top" alt="Card image cap"></img>
+                    <div class="card-body">
+                        <center><h5 class="card-title" style={{ fontFamily: 'arial' }}>{listProduk.title}</h5></center>
+                        <p class="card-text">{listProduk.body}</p>
+                        <p>{listProduk.price}</p>
+                        <center><Link to="/Checkout">
+                        <a className ="btn btn-black" >CheckOut</a></Link></center>
+                    </div>
+                </div>
+            )
+        })
+        return (
+            <div className="container">
+                <div className="box">
+                    <div class="row">
+                        {productList}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
 }
- 
+
+
 export default Product;
+
+
