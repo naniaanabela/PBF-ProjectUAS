@@ -36,7 +36,7 @@ class Product extends Component {
                         <p class="card-text">{listProduk.body}</p>
                         <p>{listProduk.price}</p>
                         <center><Link to="/Checkout">
-                        <a className ="btn btn-black" >CheckOut</a></Link></center>
+                        <a className ="btn btn-black" >Checkout</a></Link></center>
                     </div>
                 </div>
             )

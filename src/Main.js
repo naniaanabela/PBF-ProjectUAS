@@ -8,6 +8,7 @@ import Product from "./Product";
 import Contact from "./Contact";
 import admin from "./admin";
 import masukan from "./masukan";
+import Checkout from "./Checkout";
 
 class Main extends Component {
   render() {
@@ -30,6 +31,7 @@ class Main extends Component {
             <Route path="/contact" component={Contact}/>
             <Route path="/masukan" component={masukan}/>
             <Route path="/admin" component={admin}/>
+            <Route path="/Checkout" component={Checkout}/>
           </div>
           </div>  
           

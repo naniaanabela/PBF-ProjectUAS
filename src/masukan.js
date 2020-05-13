@@ -101,14 +101,14 @@ class masukan extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label htmlFor="body" className="col-sm-2 col-form-label">Isi</label>
+                        <label htmlFor="body" className="col-sm-2 col-form-label">Kritik & Saran</label>
                         <div className="col-sm-10">
                             <textarea className="form-control" id="body" name="body" rows="3" ref="isiMasukan" 
                             onChange={this.handleTambahMasukan}></textarea>
                         </div>
                     </div>
                     <input type="hidden" name="uid" ref="uid"/>
-                    <button type="submit" className="btn btn-primary" onClick={this.handleTombolSimpan}>Simpan</button>
+                    <button type="submit" className="btn btn-primary" onClick={this.handleTombolSimpan}>Kirim</button>
                 </div>
                 
 
